@@ -1,6 +1,6 @@
 package org.example;
 
-import org.example.Blackjack.Spill;
+import org.example.Blackjack.Game;
 
 public class Main {
     public static void main(String[] args) {
@@ -9,8 +9,8 @@ public class Main {
 
         System.out.println("Spillet starter......");
 
-        Spill blackjack = new Spill();
-        blackjack.startSpillet();
+        Game blackjack = new Game();
+        blackjack.startGame();
 
     }
 }

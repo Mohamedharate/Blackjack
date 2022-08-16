@@ -1,20 +1,20 @@
 package org.example.Blackjack;
 
 public abstract class Person {
-    private String navn;
+    private String name;
     private Hand hand;
 
     public Person() {
-        this.navn = "";
+        this.name = "";
         this.hand = new Hand();
     }
 
-    public String getNavn() {
-        return navn;
+    public String getName() {
+        return name;
     }
 
-    public void setNavn(String navn) {
-        this.navn = navn;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Hand getHand() {
@@ -24,18 +24,20 @@ public abstract class Person {
     public void setHand(Hand hand) {
         this.hand = hand;
     }
-    public void hit(Dekk dekk){
-        this.hand.takeCardFromDeck(dekk);
-        System.out.println(this.navn + " tar et kort");
-        this.visKort();
-    }
-    public boolean harBlackjack(){
-        return this.getHand().getValue() == 21;
+
+    public void hit(Deck deck) {
+        this.hand.takeCardFromDeck(deck);
+        System.out.println(this.name + " tar et kort");
+        this.showCards();
     }
 
-    public void visKort(){
-        System.out.println(this.navn + " har følgende kort");
-        System.out.println(this.hand + " Sum " + this.hand.getValue());
+    public boolean hasBlackjack() {
+        return this.getHand().getSum() == 21;
+    }
+
+    public void showCards() {
+        System.out.println(this.name + " har følgende kort");
+        System.out.println(this.hand + " Sum " + this.hand.getSum());
     }
 
 }
