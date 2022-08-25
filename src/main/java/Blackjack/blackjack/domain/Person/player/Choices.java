@@ -1,4 +1,4 @@
-package Blackjack.blackjack.Person.player;
+package Blackjack.blackjack.domain.Person.player;
 
 // Kan utvides til å ha alle mulige valg i ekte balckjack.
 public enum Choices {

@@ -1,4 +1,5 @@
-package Blackjack.blackjack.Card;
+package Blackjack.blackjack.domain;
+
 
 public enum CardSuitsEnum {
     SPAR,

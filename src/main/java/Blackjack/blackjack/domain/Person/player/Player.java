@@ -1,18 +1,19 @@
-package Blackjack.blackjack.Person.player;
+package Blackjack.blackjack.domain.Person.player;
 
 
-import Blackjack.blackjack.Deck.Deck;
-import Blackjack.blackjack.Person.Person;
+import Blackjack.blackjack.domain.Person.Person;
 
-import java.util.Scanner;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 
+@Entity
+@DiscriminatorValue("Player")
 public class Player extends Person {
-    Scanner input = new Scanner(System.in);
+	public Player() {
+	}
 
-    public Player() {
-        super.setName("Player");
-    }
 
+    /*
     public void choose(Deck deck) {
 
         int choice = 0;
@@ -42,4 +43,5 @@ public class Player extends Person {
             System.out.println(this.getName() + " velger stand.");
         }
     }
+*/
 }

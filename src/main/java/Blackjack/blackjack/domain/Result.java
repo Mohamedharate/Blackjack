@@ -1,4 +1,4 @@
-package Blackjack.blackjack.Game;
+package Blackjack.blackjack.domain;
 
 public enum Result {
     WIN,
