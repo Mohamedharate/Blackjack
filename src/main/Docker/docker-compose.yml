@@ -3,7 +3,7 @@ version: '2'
 services:
   app:
     image: 'docker-spring-boot-postgres:latest'
-    build: .
+    build: Docker
     ports:
       - "8080:8080"
     container_name: app
