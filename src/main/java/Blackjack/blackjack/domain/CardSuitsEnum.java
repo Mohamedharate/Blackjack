@@ -2,8 +2,8 @@ package Blackjack.blackjack.domain;
 
 
 public enum CardSuitsEnum {
-    SPAR,
-    KLØVER,
-    HJERTER,
-    RUTER
+	SPAR,
+	KLØVER,
+	HJERTER,
+	RUTER
 }

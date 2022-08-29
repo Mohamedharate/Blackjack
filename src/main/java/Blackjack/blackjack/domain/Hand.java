@@ -1,25 +1,28 @@
 package Blackjack.blackjack.domain;
 
 
-import org.jetbrains.annotations.NotNull;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Setter
 @Entity
 public class Hand {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "hand_sequence")
+	@SequenceGenerator(name = "hand_sequence", sequenceName = "hand_sequence", allocationSize = 1)
 	@Column(name = "id", nullable = false)
 	private Long id;
+
 
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
 	@JoinTable(name = "hand_card",
 			joinColumns = @JoinColumn(name = "hand_id", referencedColumnName = "id"))
 	private List<Card> handCards = new ArrayList<>();
 
-
+	@Column(name = "sum", nullable = false)
 	private int sum;
 
 	public Hand() {
@@ -27,17 +30,19 @@ public class Hand {
 	}
 
 
+	public List<Card> getHandCards() {
+		return handCards;
+	}
+
 	// Henter summen av kortene.
-	public int getSum() {
+	public int calculateSum() {
 		int sum = 0;
 		int acesCount = 0;
-
 		for (Card card : handCards) {
 			if (card.getValue() == 11)
 				acesCount++;
 			sum += card.getValue();
 		}
-
 		if (sum > 21 && acesCount > 0) {
 			while (acesCount > 0 && sum > 21) {
 				acesCount--;
@@ -47,34 +52,10 @@ public class Hand {
 		return sum;
 	}
 
-	public Card getCard(int i) {
-		return handCards.get(i);
-	}
-
-	// Kan forbedres ved å sjekke om deck har flere kort igjen.
-	public void takeCardFromDeck(@NotNull Deck deck) {
-		Card card = deck.takeCard();
-		handCards.add(card);
-		setSum(getSum());
-		deck.removeCard();
-	}
-
-
 	public Long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public List<Card> getHandCards() {
-		return handCards;
-	}
-
-	public void setHandCards(List<Card> handCards) {
-		this.handCards = handCards;
-	}
 
 	@Override
 	public String toString() {
@@ -84,7 +65,7 @@ public class Hand {
 				'}';
 	}
 
-	public void setSum(int sum) {
-		this.sum = sum;
+	public int getSum() {
+		return calculateSum();
 	}
 }

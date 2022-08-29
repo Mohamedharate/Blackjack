@@ -3,9 +3,13 @@ package Blackjack.blackjack.domain;
 import Blackjack.blackjack.domain.Person.Dealer.Dealer;
 import Blackjack.blackjack.domain.Person.Person;
 import Blackjack.blackjack.domain.Person.player.Player;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
+@Getter
+@Setter
 @Entity
 public class Game {
 
@@ -15,11 +19,11 @@ public class Game {
 		setDeck(new Deck());
 	}
 
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "game_id", nullable = false)
-	private Long game_id;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "game_sequence")
+	@SequenceGenerator(name = "game_sequence", sequenceName = "game_sequence", allocationSize = 1)
+	@Column(name = "id", nullable = false)
+	private Long id;
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "player_id", nullable = false)
@@ -38,49 +42,13 @@ public class Game {
 
 	private boolean push = false;
 
-	public void setPlayer(Player player) {
-		this.player = player;
-	}
-
-	public void setDealer(Dealer dealer) {
-		this.dealer = dealer;
-	}
-
-	public void setDeck(Deck deck) {
-		this.deck = deck;
-	}
-
-	public void setWinner(Person winner) {
-		this.winner = winner;
-	}
 
 	public Person getWinner() {
 		return winner;
 	}
 
 	public Long getGame_id() {
-		return game_id;
-	}
-
-
-	public Long getId() {
-		return game_id;
-	}
-
-	public void setId(long game_id) {
-		this.game_id = game_id;
-	}
-
-	public Player getPlayer() {
-		return player;
-	}
-
-	public Dealer getDealer() {
-		return dealer;
-	}
-
-	public Deck getDeck() {
-		return deck;
+		return getId();
 	}
 
 
@@ -88,14 +56,11 @@ public class Game {
 		return push;
 	}
 
-	public void setPush(boolean push) {
-		this.push = push;
-	}
 
 	@Override
 	public String toString() {
 		return "Game{" +
-				"game_id=" + game_id +
+				"id=" + id +
 				", player=" + player +
 				", dealer=" + dealer +
 				", deck=" + deck +

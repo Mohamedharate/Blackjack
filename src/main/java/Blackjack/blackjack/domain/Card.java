@@ -5,19 +5,13 @@ import java.util.List;
 
 @Entity
 public class Card {
+
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "card_sequence")
+	@SequenceGenerator(name = "card_sequence", sequenceName = "card_sequence", allocationSize = 1)
 	@Column(name = "id", nullable = false)
 	private Long id;
-
-	public Card() {
-	}
-
-	public Card(CardSuitsEnum cardSuit, int value) {
-		this.cardSuit = cardSuit;
-		setValue(value);
-	}
-
 
 	@Enumerated(EnumType.ORDINAL)
 	private CardSuitsEnum cardSuit;
@@ -28,6 +22,14 @@ public class Card {
 
 	@ManyToMany(mappedBy = "handCards")
 	private List<Hand> hand;
+
+	public Card() {
+	}
+
+	public Card(CardSuitsEnum cardSuit, int value) {
+		this.cardSuit = cardSuit;
+		setValue(value);
+	}
 
 	public Long getId() {
 		return id;

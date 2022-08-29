@@ -19,6 +19,7 @@ import java.util.Optional;
 @CrossOrigin("*")
 public class GameController {
 
+	
 	private final GameService gameService;
 	private final GameRepository gameRepository;
 
@@ -47,7 +48,6 @@ public class GameController {
 	}
 
 	@GetMapping("api/v1/game/{gameId}")
-
 	public String getGame(@PathVariable Long gameId) {
 		Optional<Game> g = gameRepository.findById(gameId);
 

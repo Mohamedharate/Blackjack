@@ -1,19 +1,22 @@
 package Blackjack.blackjack.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
+@Getter
+@Setter
 @Entity
 public class Deck {
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "deck_sequence")
+	@SequenceGenerator(name = "deck_sequence", sequenceName = "deck_sequence", allocationSize = 1)
 	@Column(name = "id", nullable = false)
 	private Long id;
-
-	// New deck of cards.
-
 
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
 	@JoinTable(name = "deck_card",
@@ -21,27 +24,10 @@ public class Deck {
 	private List<Card> deckCards = new ArrayList<>();
 
 
-	public void setDeckCards(List<Card> deckCards) {
-		this.deckCards = deckCards;
-	}
-
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public Deck() {
 		this.deckCards = generateDeck();
 	}
 
-	public List<Card> getDeckCards() {
-
-		return deckCards;
-	}
 
 	// Generate a new deck of 52 card when creating object of Deck.
 	public ArrayList<Card> generateDeck() {
@@ -65,22 +51,6 @@ public class Deck {
 			deck.add(new Card(cardSuitsEnum, 11));
 		}
 		return deck;
-	}
-
-
-	// Shuffles the deck.
-	public void shuffleCards() {
-		Collections.shuffle(this.deckCards);
-	}
-
-	// Take the first card from the deck.
-	public Card takeCard() {
-		return deckCards.get(0);
-	}
-
-	// Remove the first card from the deck.
-	public void removeCard() {
-		deckCards.remove(0);
 	}
 
 	@Override
